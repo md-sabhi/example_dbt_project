@@ -1,4 +1,4 @@
-{% macro union_tables() %}
+{% macro union_tables_sql_server() %}
 
 {% set schema_pattern = '%fnb_src_%_bhmark%' %}
 {% set table_pattern = '%aggregatedbhmark%' %}

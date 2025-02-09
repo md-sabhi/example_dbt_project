@@ -36,7 +36,9 @@
     {% set table_relation = dbt_utils.get_relations_by_pattern(schema_pattern, golden_table) %}
     {% set table_query = dbt_utils.union_relations(table_relation) %}
    
-    {% set table_create_query %}
+    {% set table_create_query %}        
+        IF  EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{{ golden_schema_name }}' and TABLE_NAME = '{{ golden_table}}')
+        drop table {{ golden_schema_name }}.{{golden_table}};
         SELECT x.* INTO  {{target.database}}.{{golden_schema_name}}.{{golden_table}}   from ( {{table_query}} ) as x
     {% endset %}
 
